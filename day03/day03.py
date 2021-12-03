@@ -19,27 +19,20 @@ def run():
     print(int(gamma, 2) * int(epsilon, 2))  # first answer
 
     pos = 0
-    oxygen_lines = set(lines.copy())
-    while len(oxygen_lines) > 1:
-        mcb = most_common_bit(oxygen_lines, pos)
-        for line in oxygen_lines.copy():
-            if int(line[pos]) != mcb:
-                oxygen_lines.remove(line)
+    oxygen_lines = lines.copy()
+    co2_lines = lines.copy()
+    while len(oxygen_lines) > 1 or len(co2_lines) > 1:
+        if len(oxygen_lines) > 1:
+            mcb = most_common_bit(oxygen_lines, pos)
+            oxygen_lines[:] = [line for line in oxygen_lines if int(line[pos]) == mcb]
+        if len(co2_lines) > 1:
+            mcb = most_common_bit(co2_lines, pos)
+            co2_lines[:] = [line for line in co2_lines if int(line[pos]) != mcb]
         pos += 1
-        #print('after {} cycles, oxygen_lines remaining:\n{}'.format(pos, "\n".join(line for line in oxygen_lines)))
-
-    pos = 0
-    co2_lines = set(lines.copy())
-    while len(co2_lines) > 1:
-        mcb = most_common_bit(co2_lines, pos)
-        for line in co2_lines.copy():
-            if int(line[pos]) == mcb:
-                co2_lines.remove(line)
-        pos += 1
-        #print('after {} cycles, co2_lines remaining:\n{}'.format(pos, "\n".join(line for line in co2_lines)))
+        # print('after {} cycles, oxygen_lines remaining:\n{}'.format(pos, "\n".join(line for line in oxygen_lines)))
+        # print('after {} cycles, co2_lines remaining:\n{}'.format(pos, "\n".join(line for line in co2_lines)))
     
-    print(int(list(oxygen_lines)[0], 2) * int(list(co2_lines)[0], 2))  # second answer
-
+    print(int(oxygen_lines[0], 2) * int(co2_lines[0], 2))  # second answer
 
 
 if __name__ == '__main__':
