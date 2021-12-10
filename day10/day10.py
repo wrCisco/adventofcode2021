@@ -17,11 +17,10 @@ def run():
         opened = []
         for char in line:
             if char in points1:
-                if opened:  # there are no initial closing braces in input
-                    if char != matches[opened[-1]]:
-                        score1 += points1[char]
-                        break
-                    opened.pop()
+                # there are always opening braces before closing ones in input
+                if char != matches[opened.pop()]:
+                    score1 += points1[char]
+                    break
             else:
                 opened.append(char)
         else:
