@@ -6,7 +6,7 @@ def run():
         coords, folds = fh.read().split('\n\n')
     
     coords = set(tuple(int(coord) for coord in line.split(',')) for line in coords.splitlines())
-    folds = [(line[11], int(line[13:])) for line in folds.splitlines() if line.strip()]
+    folds = [(line[11], int(line[13:])) for line in folds.splitlines()]
     new_coords = set()
     old_coords = set()
     for i, instr in enumerate(folds):
@@ -15,7 +15,7 @@ def run():
                 if coord[0] > instr[1]:
                     new_coords.add((coord[0] - (coord[0] - instr[1]) * 2, coord[1]))
                     old_coords.add(coord)
-        elif instr[0] == 'y':
+        else:
             for coord in coords:
                 if coord[1] > instr[1]:
                     new_coords.add((coord[0], coord[1] - (coord[1] - instr[1]) * 2))
@@ -31,7 +31,7 @@ def run():
     for y in range(6):
         for x in range(40):
             print('#', end='') if (x, y) in coords else print('.', end='')
-        print('\n')
+        print('')
 
 
 if __name__ == '__main__':
